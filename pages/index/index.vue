@@ -1,8 +1,10 @@
 <template>
 	<view class="model">
 		<view class="left-model">
-			<view class="navTitle" v-for="(item,index) in navList" :key="index">
-				<view :class="{'active':isActive === index}" @click="checked(index)">
+			<view :class="['nav-item',{ 'active': isActive === index }]" v-for="(item,index) in navList" :key="index">
+				<view class="b"></view>
+				<view class="b"></view>
+				<view class="nav-text" @click="checked(index)">
 					{{item.title}}
 				</view>
 			</view>
@@ -104,139 +106,182 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.model {
 		width: 100%;
 		height: 100vh;
 		display: flex;
-	}
 
-	.model .left-model {
-		width: 70px;
-		height: 100%;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
+		// $back-col: rgb(73, 57, 113);
+		// $back-col: #7dbfff;
+		// $back-col: #33835F;
+		// $back-col: #394264;
+		$back-col: #1f253d; 
+		$right-back-col: #f6f7fb;
 
-	.model .left-model .navTitle {
-		height: 90rpx;
-		line-height: 90rpx;
-		width: 100%;
-		text-align: center;
-		font-size: 32rpx;
-		font-family: Alibaba PuHuiTi;
-		color: #333;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		padding: 0 10px;
-		box-sizing: border-box;
-	}
+		.left-model {
+			width: 70px;
+			height: 100%;
+			overflow-y: auto;
+			overflow-x: hidden;
+			background-color: $back-col;
+			padding-top: 15px;
 
-	.model .left-model .navTitle .active {
-		position: relative;
-		color: #333;
-	}
+			.nav-item {
+				position: relative;
 
-	.model .left-model .navTitle .active::after {
-		content: "";
-		position: absolute;
-		width: 100rpx;
-		height: 8rpx;
-		background-color: #FFC125;
-		left: 0px;
-		right: 0px;
-		bottom: 0px;
-		margin: auto;
-	}
+				.nav-text {
+					position: relative;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: center;
+					color: #fff;
+					font-size: 1rem;
+					padding: 15px 0;
+					margin-left: 10px;
+					border-top-left-radius: 20px;
+					border-bottom-left-radius: 20px;
+				}
 
-	.model .right-model {
-		width: calc(100% - 70px);
-		height: 100%;
-		overflow-y: auto;
-		background-color: #f0f0f0;
-	}
+				.b:nth-child(1) {
+					position: absolute;
+					top: -15px;
+					height: 15px;
+					width: 100%;
+					background: #fff;
+					display: none;
 
-	.model .right-model .imgage-model {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 15px 0;
-		margin-bottom: 20px;
-		background-color: #fff;
-	}
+					&::before {
+						content: "";
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						border-bottom-right-radius: 20px;
+						background: $back-col;
+					}
+				}
 
-	.model .right-model .imgage-model:last-child {
-		margin-bottom: 0;
-	}
+				.b:nth-child(2) {
+					position: absolute;
+					bottom: -15px;
+					height: 15px;
+					width: 100%;
+					background: #fff;
+					display: none;
 
-	.model .right-model .imgage-model .imgage-code {
-		object-fit: contain;
-		width: 100%;
-		box-sizing: border-box;
-		padding: 0 20px;
-		height: 140px;
-	}
+					&::before {
+						content: "";
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						border-top-right-radius: 20px;
+						background: $back-col;
+					}
+				}
+			}
 
-	.model .right-model .imgage-model .title-code {
-		height: 36px;
-		line-height: 36px;
-		width: 100%;
-		text-align: center;
-		font-size: 18px;
-		font-family: Alibaba PuHuiTi;
-		color: #333;
-	}
+			.active {
+				.nav-text {
+					text-decoration: none;
+					color: #000;
+					background: rgb(254, 254, 254);
+				}
 
-	.hidden-model {
-		/* display: none; */
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(2, 2, 2, 0.2);
-	}
+				.b:nth-child(1),
+				.b:nth-child(2) {
+					display: block;
+				}
+			}
+		}
 
-	.hidden-model .delete-button {
-		position: absolute;
-		right: 0;
-		top: 0;
-		width: 20px;
-		height: 20px;
-		border-radius: 50%;
-		background-color: rgba(0, 0, 0, 0.7);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-size: 15px;
-		color: #fff;
-		cursor: pointer;
-		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+		.right-model {
+			width: calc(100% - 70px);
+			height: 100%;
+			overflow-y: auto;
+			background-color: $right-back-col;
 
-	}
+			.imgage-model {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding: 15px 0;
+				margin-bottom: 20px;
+				background-color: #fff;
 
-	.hidden-model .delete-button:hover {
-		background-color: rgb(0, 0, 0);
-	}
+				&:last-child {
+					margin-bottom: 0;
+				}
 
-	.hidden-model .imgage-div {
-		background-color: #fff;
-		height: 60%;
-		width: 100%;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		margin: auto;
-		padding: 20px;
-		box-sizing: border-box;
-	}
+				.imgage-code {
+					object-fit: contain;
+					width: 100%;
+					box-sizing: border-box;
+					padding: 0 20px;
+					height: 140px;
+				}
 
-	.hidden-model .imgage-div .imgage {
-		width: 100%;
-		height: 100%;
+				.title-code {
+					height: 36px;
+					line-height: 36px;
+					width: 100%;
+					text-align: center;
+					font-size: 18px;
+					color: #333;
+				}
+			}
+		}
+
+		.hidden-model {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(2, 2, 2, 0.5);
+
+			.delete-button {
+				position: absolute;
+				right: 0;
+				top: 0;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				background-color: $back-col;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 15px;
+				color: #fff;
+
+				&:hover {
+					opacity: 1;
+				}
+			}
+
+			.imgage-div {
+				background-color: #fff;
+				height: 60%;
+				width: 100%;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+				padding: 20px;
+				box-sizing: border-box;
+
+				.imgage {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
 	}
 </style>
